@@ -9,9 +9,7 @@ import Foundation
 
 protocol PartRepository: Sendable {
     
-    func create(name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
-        
-    }
+    func create(name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part?
     
     func get(id: UUID) async throws -> Part?
     
@@ -23,5 +21,8 @@ protocol PartRepository: Sendable {
     
     func deleteAll() async throws -> Bool
 }
+
+
+
 
 

@@ -10,16 +10,15 @@ import Hummingbird
 
 // This is an example data model object.
 
-enum Category: String, Codable {
+enum PartCategory: String, Codable {
     case engine
     case transmission
     case breaks
     case body
-    
 }
 
 
-struct Size {
+struct Dimensions {
     let height: Double
     let width: Double
     let length: Double
@@ -35,15 +34,15 @@ struct Location {
 struct Part {
     let id: UUID
     let name: String
-    let category: Category
-    let size: Size
+    let category: PartCategory
+    let size: Dimensions?
     let weight: Double
 }
 
 struct WareHouse {
     let id: UUID
     let name: String
-    let location:  [String]
+    let location: Location
     let contactNumber: String
     let manager: String
 }
