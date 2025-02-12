@@ -13,22 +13,19 @@ struct Part {
     let id: UUID
     let name: String
     let category: Category
-    let size: Size
+    let size: [String]
     let weight: Double
 }
 
 struct Warehiuse {
     let id: UUID
     let name: String
-    let location:  [Location]
+    let location:  [String]
     let contactNumber: String
     let manager: String
 }
 
 
-struct Size {
-    
-}
 
 
 // Every data model you create MUST contain this line (DON'T forget to change the object name)
