@@ -36,7 +36,7 @@ struct Part {
     let name: String
     let category: PartCategory
     let size: Dimensions?
-    let weight: Double
+    let weight: Double?
 }
 
 struct WareHouse {

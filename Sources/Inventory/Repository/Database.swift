@@ -7,14 +7,25 @@
 
 import Foundation
 
-final class Database {
-    let Parts: [Part] = []
-    let Warehouse: [WareHouse] = []
+
+actor Database {
+    var parts: [Part] = []
+    var warehouse: [WareHouse] = []
     
-   static let sharedDatabase = Database()
+    static let shared = Database()
     private init() {}
     
-
-
     
+    
+    
+    
+    func addPart(_ part: Part) {
+        parts.append(part)
+    }
+    
+    func getPart(id: UUID) -> Part? {
+        parts.first{part in
+            part.id == id
+        }
+    }
 }

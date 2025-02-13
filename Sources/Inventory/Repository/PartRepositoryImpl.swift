@@ -10,6 +10,20 @@ import Foundation
 struct PartRepositoryImpl: PartRepository {
     
     func create(name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
-        let newPart = 
+        let newPart = Part(
+            id: UUID(),
+            name: name,
+            category: category,
+            size: size ?? Dimensions(height: 0, width: 0, length: 0),
+            weight: weight ?? 0
+            )
+       await Database.shared.addPart(newPart)
+//        await Database.shared.parts.append(newPart)
+        return newPart
+    }
+    
+    
+    func get(id: UUID) async throws -> Part? {
+        await Database.shared.getPart(by: id)
     }
 }
