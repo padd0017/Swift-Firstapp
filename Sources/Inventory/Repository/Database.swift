@@ -10,7 +10,7 @@ import Foundation
 
 actor Database {
     var parts: [Part] = []
-    var warehouse: [WareHouse] = []
+    var warehouses: [Warehouse] = []
     
     static let shared = Database()
     private init() {}
@@ -43,6 +43,34 @@ actor Database {
         parts.remove(at: position)
     }
     
+    func deleteAllParts() {
+        parts.removeAll()
+    }
+    
+    
+    
+    //WAREHOUSE
+    
+    
+    func addWarehouse(_ warehouse: Warehouse) {
+        warehouses.append(warehouse)
+    }
+    
+    func getWarehouse(id: UUID) -> Warehouse? {
+        warehouses.first{warehouse in
+            warehouse.id == id
+        }
+    }
+    
+    
+    func getAllWarehouses() -> [Warehouse] {
+        warehouses
+    }
+    
+    
+    func updateWarehouse(at position: Int, updateWarehouse: Warehouse) {
+        warehouses[position] = updateWarehouse
+    }
     
     
 }

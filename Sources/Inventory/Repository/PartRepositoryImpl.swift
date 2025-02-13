@@ -65,4 +65,8 @@ struct PartRepositoryImpl: PartRepository {
     
     //DELETE ALL
     
+    func deleteAll() async throws -> Bool {
+        await Database.shared.deleteAllParts()
+    }
+    
 }
