@@ -53,7 +53,13 @@ struct WarehouseRepositoryImpl: WarehouseRepository {
     }
     
     
-    func delete(id: UUID) async throws -> Bool 
+    func delete(id: UUID) async throws -> Bool {
+        guard let position = await Database.shared.warehouses.firstIndex(where:{ $0.id == id}) else {
+             return false
+          }
+        
+        await Database.shared.deleteOneWarehouse(at: position)
+        return true
     }
     
 

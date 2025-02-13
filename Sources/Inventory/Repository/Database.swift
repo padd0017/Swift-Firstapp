@@ -73,4 +73,8 @@ actor Database {
     }
     
     
+    func deleteOneWarehouse(at position Int) {
+        warehouses.remove(at: position)
+    }
+    
 }
