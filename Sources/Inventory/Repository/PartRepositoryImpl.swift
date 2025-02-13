@@ -8,7 +8,7 @@
 import Foundation
 
 struct PartRepositoryImpl: PartRepository {
-    
+    //CREATE
     func create(name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
         let newPart = Part(
             id: UUID(),
@@ -24,6 +24,22 @@ struct PartRepositoryImpl: PartRepository {
     
     
     func get(id: UUID) async throws -> Part? {
-        await Database.shared.getPart(by: id)
+        await Database.shared.getPart(id: id)
+    }
+    
+    func list() async throws -> [Part] {
+        await Database.shared.getAllParts()
+    }
+    
+    
+    func update(id: UUID, name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
+        let updatedPart = Part(
+            id: id,
+            name: name,
+            category: category,
+            size: size ?? Dimensions(height: 0, width: 0, length: 0),
+            weight: weight ?? 0
+        )
+        return await Database.shared.updatePart(id: id, updatePart: updatedPart)
     }
 }

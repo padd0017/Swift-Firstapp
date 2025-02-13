@@ -28,4 +28,19 @@ actor Database {
             part.id == id
         }
     }
+    
+    func getAllParts() -> [Part] {
+        parts
+    }
+    
+    
+    func updatePart(id: UUID, updatePart: Part) -> Part? {
+        guard let position = parts.firstIndex(where: {
+            part in part.id == id
+        }) else {
+            return nil
+        }
+     parts[position] = updatePart
+        return updatePart
+    }
 }
