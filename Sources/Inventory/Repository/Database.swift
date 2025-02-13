@@ -36,7 +36,7 @@ actor Database {
     
     func updatePart(id: UUID, updatePart: Part) -> Part? {
         guard let position = parts.firstIndex(where: {
-            part in part.id == id
+            $0.id == id
         }) else {
             return nil
         }
