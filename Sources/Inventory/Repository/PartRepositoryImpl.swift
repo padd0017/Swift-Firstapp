@@ -8,6 +8,8 @@
 import Foundation
 
 struct PartRepositoryImpl: PartRepository {
+    let database = Database.shared
+    
     //CREATE
     func create(name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
         let newPart = Part(
@@ -17,19 +19,19 @@ struct PartRepositoryImpl: PartRepository {
             size: size ?? Dimensions(height: 0, width: 0, length: 0),
             weight: weight ?? 0
             )
-       await Database.shared.addPart(newPart)
+       await database.addPart(newPart)
 //        await Database.shared.parts.append(newPart)
         return newPart
     }
     
     //GET BY ID
     func get(id: UUID) async throws -> Part? {
-        await Database.shared.getPart(id: id)
+        await database.getPart(id: id)
     }
     
     //GET ALL
     func list() async throws -> [Part] {
-        await Database.shared.getAllParts()
+        await database.getAllParts()
     }
     
     //UPDATE
@@ -48,7 +50,7 @@ struct PartRepositoryImpl: PartRepository {
             size: size ?? Dimensions(height: 0, width: 0, length: 0),
             weight: weight ?? 0
         )
-        await Database.shared.updatePart(at: position, updatePart: updatedPart)
+        await database.updatePart(at: position, updatePart: updatedPart)
         return updatedPart
     }
     
@@ -59,14 +61,14 @@ struct PartRepositoryImpl: PartRepository {
            return false
         }
         
-        await Database.shared.deletePart(at: position)
+        await database.deletePart(at: position)
         return true
     }
     
     //DELETE ALL
     
     func deleteAll() async throws -> Bool {
-        await Database.shared.deleteAllParts()
+        await database.deleteAllParts()
         return true
     }
     
