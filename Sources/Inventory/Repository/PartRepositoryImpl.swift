@@ -34,7 +34,7 @@ struct PartRepositoryImpl: PartRepository {
     
     //UPDATE
     func update(id: UUID, name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
-        guard let position = Database.shared.parts.firstIndex(where: {
+       guard let position = await Database.shared.parts.firstIndex(where: {
             $0.id == id
         }) else {
             return nil
@@ -48,14 +48,14 @@ struct PartRepositoryImpl: PartRepository {
             size: size ?? Dimensions(height: 0, width: 0, length: 0),
             weight: weight ?? 0
         )
-         await Database.shared.updatePart(at: position with updatedPart)
+        await Database.shared.updatePart(at: position, updatePart: updatedPart)
         return updatedPart
     }
     
     //DELETE BY ID
     
     func delete(id: UUID) async throws -> Bool {
-        guard let position = Database.shared.parts.firstIndex(where:{ $0.id == id}) else {
+      guard let position = await Database.shared.parts.firstIndex(where:{ $0.id == id}) else {
            return false
         }
         
