@@ -34,13 +34,15 @@ actor Database {
     }
     
     
-    func updatePart(id: UUID, updatePart: Part) -> Part? {
-        guard let position = parts.firstIndex(where: {
-            $0.id == id
-        }) else {
-            return nil
-        }
-     parts[position] = updatePart
-        return updatePart
+    func updatePart(at position : Int, updatePart: Part) {
+      parts[position] = updatePart
     }
+    
+    
+    func deletePart(at position: Int) {
+        parts.remove(at: position)
+    }
+    
+    
+    
 }
