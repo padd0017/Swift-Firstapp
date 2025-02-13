@@ -52,5 +52,5 @@ struct Warehouse {
 // Every data model you create MUST contain this line (DON'T forget to change the object name)
 extension Part: ResponseEncodable, Decodable, Equatable {}
 extension Warehouse: ResponseEncodable, Decodable, Equatable {}
-extension Size: ResponseEncodable, Decodable, Equatable {}
+extension Dimensions: ResponseEncodable, Decodable, Equatable {}
 extension Location: ResponseEncodable, Decodable, Equatable {}

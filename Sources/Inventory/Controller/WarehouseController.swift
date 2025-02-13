@@ -33,7 +33,7 @@ struct WarehouseController<Repository: WarehouseRepository> {
         if let warehouse = try await self.repository.create(
             name: request.name,
             location: request.location,
-            contact: request.contactNumber,
+            contact: request.contact,
             manager: request.manager
         ) {
             return EditedResponse(status: .created, response: warehouse)
@@ -53,7 +53,7 @@ struct WarehouseController<Repository: WarehouseRepository> {
             id: id,
             name: request.name,
             location: request.location,
-            contact: request.contactNumber,
+            contact: request.contact,
             manager: request.manager
         ) else {
             throw HTTPError(.badRequest)

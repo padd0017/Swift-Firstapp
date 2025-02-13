@@ -10,7 +10,7 @@ import Foundation
 
 struct WarehouseRepositoryImpl: WarehouseRepository {
     
-    
+    //CREATE
     func create(name: String, location: Location, contact: String, manager: String?) async throws -> Warehouse? {
         let newWarehouse = Warehouse(
             id: UUID(),
@@ -24,14 +24,21 @@ struct WarehouseRepositoryImpl: WarehouseRepository {
         return newWarehouse
     }
     
+    
+    //GETONE
     func get(id: UUID) async throws -> Warehouse? {
         await Database.shared.getWarehouse(id: id)
     }
     
+    
+    //GETALL
     func list() async throws -> [Warehouse] {
         await Database.shared.getAllWarehouses()
     }
     
+    
+    
+    //UPDATE
     func update(id: UUID, name: String, location: Location, contact: String, manager: String?) async throws -> Warehouse? {
         guard let position = await Database.shared.warehouses.firstIndex(where: {
             $0.id == id
@@ -53,6 +60,8 @@ struct WarehouseRepositoryImpl: WarehouseRepository {
     }
     
     
+    
+    //DELETEONE
     func delete(id: UUID) async throws -> Bool {
         guard let position = await Database.shared.warehouses.firstIndex(where:{ $0.id == id}) else {
              return false
@@ -62,5 +71,11 @@ struct WarehouseRepositoryImpl: WarehouseRepository {
         return true
     }
     
+    
+    //DELETEALL
+    func deleteAll() async throws -> Bool {
+        await Database.shared.deleteAllWarehouses()
+        return true
+    }
 
 }
