@@ -19,31 +19,39 @@ actor Database {
     
     
     
-    func addPart(_ part: Part) {
-        parts.append(part)
+    func add(element: Part) async {
+        parts.append(element)
     }
     
-    func getPart(id: UUID) -> Part? {
+    func get(id: UUID) -> Part? {
         parts.first{part in
             part.id == id
         }
     }
     
-    func getAllParts() -> [Part] {
+    func list() -> [Part] {
         parts
     }
     
     
-    func updatePart(at position : Int, updatePart: Part) {
-      parts[position] = updatePart
-    }
+    func update(element: Part) async -> Bool {
+           guard let index = parts.firstIndex(where: { $0.id == element.id }) else {
+               return false
+           }
+           parts[index] = element
+           return true
+       }
     
     
-    func deletePart(at position: Int) {
-        parts.remove(at: position)
-    }
-    
-    func deleteAllParts() {
+    func delete(id: UUID) async -> Bool {
+            guard let index = parts.firstIndex(where: { $0.id == id }) else {
+                return false
+            }
+            parts.remove(at: index)
+            return true
+        }
+
+    func deleteAll() async {
         parts.removeAll()
     }
     
@@ -52,33 +60,41 @@ actor Database {
     //WAREHOUSE
     
     
-    func addWarehouse(_ warehouse: Warehouse) {
-        warehouses.append(warehouse)
+    func add(element: Warehouse) async {
+        warehouses.append(element)
     }
     
-    func getWarehouse(id: UUID) -> Warehouse? {
-        warehouses.first{warehouse in
+    func get(id: UUID) async -> Warehouse? {
+       return warehouses.first{warehouse in
             warehouse.id == id
         }
     }
     
     
-    func getAllWarehouses() -> [Warehouse] {
-        warehouses
+    func getAll() async -> [Warehouse] {
+        return warehouses
     }
     
     
-    func updateWarehouse(at position: Int, updateWarehouse: Warehouse) {
-        warehouses[position] = updateWarehouse
+    func update(id: UUID, newWarehouse: Warehouse) async -> Bool {
+        guard let index = warehouses.firstIndex(where: { $0.id == id }) else {
+            return false
+        }
+        warehouses[index] = newWarehouse
+        return true
     }
     
     
-    func deleteOneWarehouse(at position: Int) {
-        warehouses.remove(at: position)
+    func deleteOne(id: UUID) async -> Bool {
+        guard let index = warehouses.firstIndex(where: { $0.id == id }) else {
+                    return false
+                }
+                warehouses.remove(at: index)
+                return true
     }
     
     
-    func deleteAllWarehouses() {
+    func deleteAllWarehouse() async {
         warehouses.removeAll()
     }
     

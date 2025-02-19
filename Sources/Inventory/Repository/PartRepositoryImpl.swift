@@ -8,7 +8,6 @@
 import Foundation
 
 struct PartRepositoryImpl: PartRepository {
-    let database = Database.shared
     
     //CREATE
     func create(name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
@@ -19,29 +18,23 @@ struct PartRepositoryImpl: PartRepository {
             size: size ?? Dimensions(height: 0, width: 0, length: 0),
             weight: weight ?? 0
             )
-       await database.addPart(newPart)
+        await Database.shared.add(element: newPart)
 //        await Database.shared.parts.append(newPart)
         return newPart
     }
     
     //GET BY ID
     func get(id: UUID) async throws -> Part? {
-        await database.getPart(id: id)
+      return await Database.shared.get(id: id)
     }
     
     //GET ALL
     func list() async throws -> [Part] {
-        await database.getAllParts()
+        return await Database.shared.list()
     }
     
     //UPDATE
     func update(id: UUID, name: String, category: PartCategory, size: Dimensions?, weight: Double?) async throws -> Part? {
-       guard let position = await Database.shared.parts.firstIndex(where: {
-            $0.id == id
-        }) else {
-            return nil
-        }
-
         
         let updatedPart = Part(
             id: id,
@@ -50,25 +43,21 @@ struct PartRepositoryImpl: PartRepository {
             size: size ?? Dimensions(height: 0, width: 0, length: 0),
             weight: weight ?? 0
         )
-        await database.updatePart(at: position, updatePart: updatedPart)
-        return updatedPart
+        let success = await Database.shared.update(element: updatedPart)
+                return success ? updatedPart : nil
     }
     
     //DELETE BY ID
     
     func delete(id: UUID) async throws -> Bool {
-      guard let position = await Database.shared.parts.firstIndex(where:{ $0.id == id}) else {
-           return false
-        }
-        
-        await database.deletePart(at: position)
-        return true
+        return await Database.shared.delete(id: id)
+    
     }
     
     //DELETE ALL
     
     func deleteAll() async throws -> Bool {
-        await database.deleteAllParts()
+        await Database.shared.deleteAll()
         return true
     }
     

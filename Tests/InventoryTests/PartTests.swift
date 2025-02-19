@@ -33,7 +33,7 @@ struct PartTests {
 
     @Test func create() async throws {
         let id = UUID()
-        let expectedPart = Part(id: id, name: "Part 1", category: .engine, size: .init(hight: 10, width: 20, length: 30), weight: 12)
+        let expectedPart = Part(id: id, name: "Part 1", category: .engine, size: .init(height: 10, width: 20, length: 30), weight: 12)
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
             let part = try await Self.create(
@@ -60,8 +60,8 @@ struct PartTests {
     
     @Test func get() async throws {
         let id = UUID()
-        let expected = Part(id: id, name: "Part 1", category: .engine, size: .init(hight: 10, width: 20, length: 30), weight: 12)
-        let _ = Database.shared.add(element: expected)
+        let expected = Part(id: id, name: "Part 1", category: .engine, size: .init(height: 10, width: 20, length: 30), weight: 12)
+        let _ = await Database.shared.add(element: expected)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -79,11 +79,11 @@ struct PartTests {
     }
     
     @Test func list() async throws {
-        let expected1 = Part(id: UUID(), name: "Part 1", category: .engine, size: .init(hight: 10, width: 20, length: 30), weight: 12)
-        let expected2 = Part(id: UUID(), name: "Part 2", category: .exterior, size: .init(hight: 10, width: 20, length: 30), weight: 12)
+        let expected1 = Part(id: UUID(), name: "Part 1", category: .engine, size: .init(height: 10, width: 20, length: 30), weight: 12)
+        let expected2 = Part(id: UUID(), name: "Part 2", category: .exterior, size: .init(height: 10, width: 20, length: 30), weight: 12)
         
-        let _ = Database.shared.add(element: expected1)
-        let _ = Database.shared.add(element: expected2)
+        let _ =  await Database.shared.add(element: expected1)
+        let _ =  await Database.shared.add(element: expected2)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -107,9 +107,9 @@ struct PartTests {
     
     @Test func update() async throws {
         let id = UUID()
-        let expected1 = Part(id: id, name: "Part 1", category: .engine, size: .init(hight: 10, width: 20, length: 30), weight: 12)
+        let expected1 = Part(id: id, name: "Part 1", category: .engine, size: .init(height: 10, width: 20, length: 30), weight: 12)
         
-        let _ = Database.shared.add(element: expected1)
+        let _ =  await Database.shared.add(element: expected1)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -127,11 +127,11 @@ struct PartTests {
     
     @Test func delete() async throws {
         let id = UUID()
-        let expected1 = Part(id: id, name: "Part 1", category: .engine, size: .init(hight: 10, width: 20, length: 30), weight: 12)
-        let expected2 = Part(id: UUID(), name: "Part 2", category: .exterior, size: .init(hight: 10, width: 20, length: 30), weight: 12)
+        let expected1 = Part(id: id, name: "Part 1", category: .engine, size: .init(height: 10, width: 20, length: 30), weight: 12)
+        let expected2 = Part(id: UUID(), name: "Part 2", category: .exterior, size: .init(height: 10, width: 20, length: 30), weight: 12)
         
-        let _ = Database.shared.add(element: expected1)
-        let _ = Database.shared.add(element: expected2)
+        let _ =  await Database.shared.add(element: expected1)
+        let _ =  await  Database.shared.add(element: expected2)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -148,11 +148,11 @@ struct PartTests {
     
     @Test func deleteAll() async throws {
         let id = UUID()
-        let expected1 = Part(id: id, name: "Part 1", category: .engine, size: .init(hight: 10, width: 20, length: 30), weight: 12)
-        let expected2 = Part(id: UUID(), name: "Part 2", category: .exterior, size: .init(hight: 10, width: 20, length: 30), weight: 12)
+        let expected1 = Part(id: id, name: "Part 1", category: .engine, size: .init(height: 10, width: 20, length: 30), weight: 12)
+        let expected2 = Part(id: UUID(), name: "Part 2", category: .exterior, size: .init(height: 10, width: 20, length: 30), weight: 12)
         
-        let _ = Database.shared.add(element: expected1)
-        let _ = Database.shared.add(element: expected2)
+        let _ =  await Database.shared.add(element: expected1)
+        let _ =  await Database.shared.add(element: expected2)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in

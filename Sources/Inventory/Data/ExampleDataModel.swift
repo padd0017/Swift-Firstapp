@@ -15,8 +15,8 @@ enum PartCategory: String, Codable {
     case transmission
     case breaks
     case body
+    case exterior
 }
-
 
 struct Dimensions {
     let height: Double
@@ -25,9 +25,9 @@ struct Dimensions {
 }
 
 struct Location {
-    let address: String
     let city: String
     let country: String
+    let address: String
 }
 
 
@@ -44,7 +44,7 @@ struct Warehouse {
     let name: String
     let location: Location
     let contact: String
-    let manager: String
+    let manager: String?
 }
 
 

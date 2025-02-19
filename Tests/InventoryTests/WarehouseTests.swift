@@ -23,7 +23,7 @@ struct WarehouseTests {
     }
     
     static func create(name: String, location: Location, contact: String, manager: String?, client: some TestClientProtocol) async throws -> Warehouse {
-        let request = Warehouse(id: UUID(), name: name, location: location, contactNumber: contact, manager: manager)
+        let request = Warehouse(id: UUID(), name: name, location: location, contact: contact, manager: manager)
         let buffer = try JSONEncoder().encodeAsByteBuffer(request, allocator: ByteBufferAllocator())
         
         return try await client.execute(uri: "/warehouses", method: .post, body: buffer) { response in
@@ -37,7 +37,7 @@ struct WarehouseTests {
             id: id,
             name: "Warehouse 1",
             location: Location(city: "Ottawa", country: "Canada", address: "1 City ST"),
-            contactNumber: "6131234567",
+            contact: "6131234567",
             manager: "John"
         )
 
@@ -46,7 +46,7 @@ struct WarehouseTests {
             let Warehouse = try await Self.create(
                 name: expected.name,
                 location: expected.location,
-                contact: expected.contactNumber,
+                contact: expected.contact,
                 manager: expected.manager,
                 client: client
             )
@@ -71,11 +71,11 @@ struct WarehouseTests {
             id: id,
             name: "Warehouse 1",
             location: Location(city: "Ottawa", country: "Canada", address: "1 City ST"),
-            contactNumber: "6131234567",
+            contact: "6131234567",
             manager: "John"
         )
 
-        let _ = Database.shared.add(element: expected)
+        let _ =  await  Database.shared.add(element: expected)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -97,7 +97,7 @@ struct WarehouseTests {
             id: UUID(),
             name: "Warehouse 1",
             location: Location(city: "Ottawa", country: "Canada", address: "1 City ST"),
-            contactNumber: "6131234567",
+            contact: "6131234567",
             manager: "John"
         )
         
@@ -105,12 +105,12 @@ struct WarehouseTests {
             id: UUID(),
             name: "Warehouse 2",
             location: Location(city: "Ottawa", country: "Canada", address: "15 Downtown ST"),
-            contactNumber: "613176543",
+            contact: "613176543",
             manager: "Mike"
         )
         
-        let _ = Database.shared.add(element: expected1)
-        let _ = Database.shared.add(element: expected2)
+        let _ =  await  Database.shared.add(element: expected1)
+        let _ =  await  Database.shared.add(element: expected2)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -125,7 +125,7 @@ struct WarehouseTests {
             id: id,
             name: name,
             location: location,
-            contactNumber: contactNumber,
+            contact: contactNumber,
             manager: manager
         )
         
@@ -145,15 +145,15 @@ struct WarehouseTests {
             id: id,
             name: "Warehouse 1",
             location: Location(city: "Ottawa", country: "Canada", address: "1 City ST"),
-            contactNumber: "6131234567",
+            contact: "6131234567",
             manager: "John"
         )
         
-        let _ = Database.shared.add(element: expected1)
+        let _ =  await  Database.shared.add(element: expected1)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
-            let actual = try await Self.patch(id: id, name: "Updated Warehouse 1", location: expected1.location, contactNumber: expected1.contactNumber, manager: expected1.manager, client: client)
+            let actual = try await Self.patch(id: id, name: "Updated Warehouse 1", location: expected1.location, contactNumber: expected1.contact, manager: expected1.manager, client: client)
             #expect(actual?.name == "Updated Warehouse 1")
         }
         
@@ -171,7 +171,7 @@ struct WarehouseTests {
             id: id,
             name: "Warehouse 1",
             location: Location(city: "Ottawa", country: "Canada", address: "1 City ST"),
-            contactNumber: "6131234567",
+            contact: "6131234567",
             manager: "John"
         )
         
@@ -179,12 +179,12 @@ struct WarehouseTests {
             id: UUID(),
             name: "Warehouse 2",
             location: Location(city: "Ottawa", country: "Canada", address: "15 Downtown ST"),
-            contactNumber: "613176543",
+            contact: "613176543",
             manager: "Mike"
         )
         
-        let _ = Database.shared.add(element: expected1)
-        let _ = Database.shared.add(element: expected2)
+        let _ =  await Database.shared.add(element: expected1)
+        let _ =   await Database.shared.add(element: expected2)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
@@ -205,7 +205,7 @@ struct WarehouseTests {
             id: id,
             name: "Warehouse 1",
             location: Location(city: "Ottawa", country: "Canada", address: "1 City ST"),
-            contactNumber: "6131234567",
+            contact: "6131234567",
             manager: "John"
         )
         
@@ -213,12 +213,12 @@ struct WarehouseTests {
             id: UUID(),
             name: "Warehouse 2",
             location: Location(city: "Ottawa", country: "Canada", address: "15 Downtown ST"),
-            contactNumber: "613176543",
+            contact: "613176543",
             manager: "Mike"
         )
         
-        let _ = Database.shared.add(element: expected1)
-        let _ = Database.shared.add(element: expected2)
+        let _ = await  Database.shared.add(element: expected1)
+        let _ =   await Database.shared.add(element: expected2)
         
         let app = try await buildApplication(TestArguments())
         try await app.test(.router) { client in
